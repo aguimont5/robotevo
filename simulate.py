@@ -1,1 +1,2 @@
-#Start working on simulation
+#load libraries
+import pybullet as p
