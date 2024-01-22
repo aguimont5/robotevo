@@ -5,6 +5,8 @@ import time as t
 #create physics client
 physicsClient = p.connect(p.GUI)
 
+p.loadSDF("box.sdf")
+
 #simulation loop
 for i in range(0,1000):
     p.stepSimulation()
