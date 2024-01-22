@@ -5,6 +5,8 @@ import time as t
 #create physics client
 physicsClient = p.connect(p.GUI)
 
+p.setGravity(0,0,-9.8)
+
 p.loadSDF("box.sdf")
 
 #simulation loop
