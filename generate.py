@@ -1,7 +1,7 @@
 import pyrosim.pyrosim as pyrosim
 
 # open world in box.sdf
-pyrosim.Start_SDF("boxes.sdf")
+pyrosim.Start_SDF("world.sdf")
 
 # set L,W,H
 length = 1.0
@@ -13,11 +13,8 @@ x = 0.0
 y=0.0
 z=.5
 
-# creates twenty five towers
-for row in range(0,5):
-    for col in range(0,5):
-        for i in range(0,10):
-            pyrosim.Send_Cube(name="Box2", pos=[x+row, y+col, z + i], size=[length*(.9**i), width*(.9**i), height*(.9**i)])
+#create one box at the origin
+pyrosim.Send_Cube(name="Box", pos=[x, y, z], size=[length, width, height])
 
 # close world
 pyrosim.End()

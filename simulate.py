@@ -13,7 +13,7 @@ p.setGravity(0, 0, -9.8)
 # Adds a plane to serve as the floor
 planeId = p.loadURDF("plane.urdf")
 
-p.loadSDF("boxes.sdf")
+p.loadSDF("world.sdf")
 
 # simulation loop
 for i in range(0, 5000):
