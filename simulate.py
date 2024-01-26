@@ -1,4 +1,5 @@
 # load libraries
+import pyrosim.pyrosim as pyrosim
 import pybullet as p
 import time as t
 import pybullet_data
@@ -20,7 +21,10 @@ p.loadSDF("world.sdf")
 
 # simulation loop
 for i in range(0, 5000):
+    # step simulation
     p.stepSimulation()
+    # add touch sensor for back leg
+    backLegTouch = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
     t.sleep(1 / 60)
     print(i)
 
