@@ -1,8 +1,5 @@
 import pyrosim.pyrosim as pyrosim
 
-# open world in box.sdf
-pyrosim.Start_SDF("world.sdf")
-
 # set L,W,H
 length = 1.0
 width = 1.0
@@ -13,8 +10,25 @@ x = 0.0
 y=0.0
 z=.5
 
-#create one box at the origin
-pyrosim.Send_Cube(name="Box", pos=[x, y, z], size=[length, width, height])
+def Create_Robot():
+    # create robot body file
+    pyrosim.Start_URDF("body.urdf")
 
-# close world
-pyrosim.End()
+    # create robot torso
+    pyrosim.Send_Cube(name="Torso", pos=[x, y, z], size=[length, width, height])
+
+    # close robot
+    pyrosim.End()
+
+
+def Create_World():
+    # open world in box.sdf
+    pyrosim.Start_SDF("world.sdf")
+    #create cube away from robot)
+    pyrosim.Send_Cube(name="Box", pos=[x - 2, y + 2, z], size=[length, width, height])
+    # close world
+    pyrosim.End()
+
+
+Create_World()
+Create_Robot()

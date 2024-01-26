@@ -13,6 +13,9 @@ p.setGravity(0, 0, -9.8)
 # Adds a plane to serve as the floor
 planeId = p.loadURDF("plane.urdf")
 
+# Adds robot to world
+robotId = p.loadURDF("body.urdf")
+
 p.loadSDF("world.sdf")
 
 # simulation loop
