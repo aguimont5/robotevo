@@ -1,18 +1,24 @@
-#load libraries
+# load libraries
 import pybullet as p
 import time as t
+import pybullet_data
 
-#create physics client
+# create physics client
 physicsClient = p.connect(p.GUI)
+p.setAdditionalSearchPath(pybullet_data.getDataPath())
 
-p.setGravity(0,0,-9.8)
+# Adds gravity
+p.setGravity(0, 0, -9.8)
 
-p.loadSDF("box.sdf")
+# Adds a plane to serve as the floor
+planeId = p.loadURDF("plane.urdf")
 
-#simulation loop
-for i in range(0,1000):
+p.loadSDF("boxes.sdf")
+
+# simulation loop
+for i in range(0, 5000):
     p.stepSimulation()
-    t.sleep(1/60)
+    t.sleep(1 / 60)
     print(i)
 
 p.disconnect()
