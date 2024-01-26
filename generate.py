@@ -14,17 +14,17 @@ def Create_Robot():
     # create robot body file
     pyrosim.Start_URDF("body.urdf")
 
-    # create robot torso
-    pyrosim.Send_Cube(name="Torso", pos=[0, 0, .5], size=[length, width, height])
-    #create joint for robot torso <-> leg
-    pyrosim.Send_Joint(name="Torso_Leg1", parent="Torso", child="Leg1", type="revolute", position=[0, 0, 1.0])
-    # create robot leg
-    pyrosim.Send_Cube(name="Leg1", pos=[0.0, 0, .5], size=[length, width, height])
+    # create robot (absolute position)
+    pyrosim.Send_Cube(name="Torso", pos=[1.5, 0, 1.5], size=[length, width, height])
+    # create joint for robot torso <-> back leg (absolute position)
+    pyrosim.Send_Joint(name="Torso_BackLeg", parent="Torso", child="BackLeg", type="revolute", position=[1.0, 0, 1.0])
+    # create back robot leg (relative position to Torso_BackLeg joint)
+    pyrosim.Send_Cube(name="BackLeg", pos=[-.5, 0, -.5], size=[length, width, height])
 
-    #second joint
-    pyrosim.Send_Joint(name="Leg1_Leg2", parent="Leg1", child="Leg2", type="revolute", position=[0, 0, 1.0])
-    #second leg
-    pyrosim.Send_Cube(name="Leg2", pos=[0.0, 0, .5], size=[length, width, height])
+    # create joint for robot torso <-> front leg (absolute position)
+    pyrosim.Send_Joint(name="Torso_FrontLeg", parent="Torso", child="FrontLeg", type="revolute", position=[2.0, 0, 1.0])
+    # create robot front leg (relative position to Torso_FrontLeg joint)
+    pyrosim.Send_Cube(name="FrontLeg", pos=[.5, 0, -.5], size=[length, width, height])
 
     # close robot
     pyrosim.End()
