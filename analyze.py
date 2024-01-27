@@ -3,7 +3,10 @@ import matplotlib.pyplot as plt
 
 # load sensor data
 backLegSensorValues = np.load('data/backLegSensorValues.npy')
-# create plot
-plt.plot(backLegSensorValues)
+frontLegSensorValues = np.load('data/frontLegSensorValues.npy')
+# create plots
+plt.plot(backLegSensorValues, label='Back Leg', linewidth=2)
+plt.plot(frontLegSensorValues, label='Front Leg')
 # show plot
-print(plt.show())
+plt.legend()
+plt.show()
