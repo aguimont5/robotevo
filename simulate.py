@@ -31,9 +31,17 @@ frontLegSensorValues = np.zeros(1000)
 for i in range(0, 1000):
     # step simulation
     p.stepSimulation()
+
     # add touch sensor for back leg
     backLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
     frontLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("FrontLeg")
+
+    # add motor to robot
+    pyrosim.Set_Motor_For_Joint(bodyIndex=robotId,
+                                jointName=b'Torso_BackLeg',
+                                controlMode=p.POSITION_CONTROL,
+                                targetPosition=0.0,
+                                maxForce=500)
     t.sleep(1 / 60)
     #print(backLegSensorValues)
 
