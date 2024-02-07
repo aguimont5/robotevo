@@ -4,6 +4,7 @@ import pybullet as p
 import time as t
 import pybullet_data
 import numpy as np
+import random
 
 # create physics client
 physicsClient = p.connect(p.GUI)
@@ -40,13 +41,13 @@ for i in range(0, 1000):
     pyrosim.Set_Motor_For_Joint(bodyIndex=robotId,
                                 jointName=b'Torso_BackLeg',
                                 controlMode=p.POSITION_CONTROL,
-                                targetPosition=-np.pi/4.0,
+                                targetPosition=random.uniform(-np.pi/32 , np.pi/32),
                                 maxForce=500)
     # add motor to robot Torso_FrontLeg
     pyrosim.Set_Motor_For_Joint(bodyIndex=robotId,
                                 jointName=b'Torso_FrontLeg',
                                 controlMode=p.POSITION_CONTROL,
-                                targetPosition=np.pi / 4.0,
+                                targetPosition=random.uniform(-np.pi/32 , np.pi/32),
                                 maxForce=500)
     t.sleep(1 / 60)
     #print(backLegSensorValues)
