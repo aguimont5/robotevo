@@ -1,5 +1,6 @@
 # load libraries
 import pyrosim.pyrosim as pyrosim
+import constants as c
 import pybullet as p
 import time as t
 import pybullet_data
@@ -11,7 +12,7 @@ physicsClient = p.connect(p.GUI)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
 
 # Adds gravity
-p.setGravity(0, 0, -9.8)
+p.setGravity(c.GRAVITY_X, c.GRAVITY_Y, c.GRAVITY_A)
 
 # Adds a plane to serve as the floor
 planeId = p.loadURDF("plane.urdf")
@@ -24,32 +25,22 @@ p.loadSDF("world.sdf")
 # init sensors
 pyrosim.Prepare_To_Simulate(robotId)
 
-# init motor variables
-frontLeg_amplitude = np.pi/12
-frontLeg_frequency = 12
-frontLeg_phaseOffset = 0
-
-backLeg_amplitude = np.pi/24
-backLeg_frequency = 2
-backLeg_phaseOffset = np.pi/2
-
-
 # creating array to hold sensor values
-backLegSensorValues = np.zeros(1000)
-frontLegSensorValues = np.zeros(1000)
+backLegSensorValues = np.zeros(c.STEPS)
+frontLegSensorValues = np.zeros(c.STEPS)
 
 #create sinuodusly varying values to send to motors
-frontLeg_targetAngles = np.linspace(0, 2*np.pi, 1000, dtype='float')
-for i in range(1000):
-    frontLeg_targetAngles[i] = frontLeg_amplitude * np.sin(frontLeg_frequency * frontLeg_targetAngles[i] + frontLeg_phaseOffset)
+frontLeg_targetAngles = np.linspace(0, 2*np.pi, c.STEPS, dtype='float')
+for i in range(c.STEPS):
+    frontLeg_targetAngles[i] = c.FRONTLEG_AMP * np.sin(c.FRONTLEG_FREQ * frontLeg_targetAngles[i] + c.FRONTLEG_OFFSET)
 
-backLeg_targetAngles = np.linspace(0, 2*np.pi, 1000, dtype='float')
-for i in range(1000):
-    backLeg_targetAngles[i] = backLeg_amplitude * np.sin(backLeg_frequency * backLeg_targetAngles[i] + backLeg_phaseOffset)
+backLeg_targetAngles = np.linspace(0, 2*np.pi, c.STEPS, dtype='float')
+for i in range(c.STEPS):
+    backLeg_targetAngles[i] = c.BACKLEG_AMP * np.sin(c.BACKLEG_FREQ * backLeg_targetAngles[i] + c.BACKLEG_OFFSET)
 
 
 # simulation loop
-for i in range(0, 1000):
+for i in range(0, c.STEPS):
     # step simulation
     p.stepSimulation()
 
@@ -63,15 +54,15 @@ for i in range(0, 1000):
                                 controlMode=p.POSITION_CONTROL,
                                 targetPosition=random.uniform(backLeg_targetAngles[i],
                                                               backLeg_targetAngles[i]),
-                                maxForce=500)
+                                maxForce=c.MAX_FORCE)
     # add motor to robot Torso_FrontLeg
     pyrosim.Set_Motor_For_Joint(bodyIndex=robotId,
                                 jointName=b'Torso_FrontLeg',
                                 controlMode=p.POSITION_CONTROL,
                                 targetPosition=random.uniform(frontLeg_targetAngles[i],
                                                               frontLeg_targetAngles[i]),
-                                maxForce=500)
-    t.sleep(1 / 60)
+                                maxForce=c.MAX_FORCE)
+    t.sleep(c.SIM_SPEED)
     #print(backLegSensorValues)
 
 # save leg sensor values to numpy file
