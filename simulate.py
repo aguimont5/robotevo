@@ -24,9 +24,29 @@ p.loadSDF("world.sdf")
 # init sensors
 pyrosim.Prepare_To_Simulate(robotId)
 
-# creating leg sensors
+# init motor variables
+frontLeg_amplitude = np.pi/12
+frontLeg_frequency = 12
+frontLeg_phaseOffset = 0
+
+backLeg_amplitude = np.pi/24
+backLeg_frequency = 2
+backLeg_phaseOffset = np.pi/2
+
+
+# creating array to hold sensor values
 backLegSensorValues = np.zeros(1000)
 frontLegSensorValues = np.zeros(1000)
+
+#create sinuodusly varying values to send to motors
+frontLeg_targetAngles = np.linspace(0, 2*np.pi, 1000, dtype='float')
+for i in range(1000):
+    frontLeg_targetAngles[i] = frontLeg_amplitude * np.sin(frontLeg_frequency * frontLeg_targetAngles[i] + frontLeg_phaseOffset)
+
+backLeg_targetAngles = np.linspace(0, 2*np.pi, 1000, dtype='float')
+for i in range(1000):
+    backLeg_targetAngles[i] = backLeg_amplitude * np.sin(backLeg_frequency * backLeg_targetAngles[i] + backLeg_phaseOffset)
+
 
 # simulation loop
 for i in range(0, 1000):
@@ -41,13 +61,15 @@ for i in range(0, 1000):
     pyrosim.Set_Motor_For_Joint(bodyIndex=robotId,
                                 jointName=b'Torso_BackLeg',
                                 controlMode=p.POSITION_CONTROL,
-                                targetPosition=random.uniform(-np.pi/32 , np.pi/32),
+                                targetPosition=random.uniform(backLeg_targetAngles[i],
+                                                              backLeg_targetAngles[i]),
                                 maxForce=500)
     # add motor to robot Torso_FrontLeg
     pyrosim.Set_Motor_For_Joint(bodyIndex=robotId,
                                 jointName=b'Torso_FrontLeg',
                                 controlMode=p.POSITION_CONTROL,
-                                targetPosition=random.uniform(-np.pi/32 , np.pi/32),
+                                targetPosition=random.uniform(frontLeg_targetAngles[i],
+                                                              frontLeg_targetAngles[i]),
                                 maxForce=500)
     t.sleep(1 / 60)
     #print(backLegSensorValues)
@@ -55,4 +77,9 @@ for i in range(0, 1000):
 # save leg sensor values to numpy file
 np.save('data/backLegSensorValues.npy', backLegSensorValues)
 np.save('data/frontLegSensorValues.npy', frontLegSensorValues)
+
+#save motor values to np file
+np.save('data/FrontLeg_MotorValues.npy', frontLeg_targetAngles)
+np.save('data/BackLeg_MotorValues.npy', backLeg_targetAngles)
+
 p.disconnect()
