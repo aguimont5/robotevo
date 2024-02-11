@@ -1,21 +1,21 @@
 import numpy as np
 
 # simulation vars
-STEPS = 1000
-SIM_SPEED = 1/60
+steps = 1000
+sim_speed = 1/45
 
 # gravity
-GRAVITY_X = 0
-GRAVITY_Y = 0
-GRAVITY_A = -9.8
+grav_x = 0
+grav_y = 0
+grav_acc = -9.8
 
 # motors
-MAX_FORCE = 500
+max_force = 500
 
-FRONTLEG_AMP = np.pi/12
-FRONTLEG_FREQ = 12
-FRONTLEG_OFFSET = 0
+frontleg_amp = np.pi/12
+frontleg_freq = 10
+frontleg_offset = 0
 
-BACKLEG_AMP = np.pi/24
-BACKLEG_FREQ = 2
-BACKLEG_OFFSET = np.pi/2
+backleg_amp = np.pi/12
+backleg_freq = 2
+backleg_offset = 0
