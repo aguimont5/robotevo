@@ -10,7 +10,7 @@ x = 0.0
 y=0.0
 z=.5
 
-def Create_Robot():
+def Generate_Body():
     # create robot body file
     pyrosim.Start_URDF("body.urdf")
 
@@ -29,6 +29,16 @@ def Create_Robot():
     # close robot
     pyrosim.End()
 
+def Generate_Brain():
+    # create robot brain file
+    pyrosim.Start_NeuralNetwork("brain.nndf")
+
+    # create a neuron to receive a value from torso sensor
+    pyrosim.Send_Sensor_Neuron(name=0, linkName="Torso")
+
+    # close robot
+    pyrosim.End()
+
 
 def Create_World():
     # open world in box.sdf
@@ -40,4 +50,5 @@ def Create_World():
 
 
 Create_World()
-Create_Robot()
+Generate_Body()
+Generate_Brain()
