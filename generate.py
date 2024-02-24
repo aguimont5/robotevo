@@ -43,7 +43,17 @@ def Generate_Brain():
     pyrosim.Send_Motor_Neuron(name=4, jointName="Torso_FrontLeg")
 
     # create synapses
-    pyrosim.Send_Synapse(sourceNeuronName=0, targetNeuronName=3, weight=1.0)
+
+    # torso sensor -> torso_backleg motor
+    pyrosim.Send_Synapse(sourceNeuronName=1, targetNeuronName=3, weight=0)
+    # backleg sensor -> torso_backleg motor
+    pyrosim.Send_Synapse(sourceNeuronName=1, targetNeuronName=3, weight=-.1)
+    # backleg sensor -> torso_frontleg motor
+    pyrosim.Send_Synapse(sourceNeuronName=1, targetNeuronName=4, weight= 0)
+    # frontleg sensor -> torso_frontleg motor
+    pyrosim.Send_Synapse(sourceNeuronName=2, targetNeuronName=4, weight= -1)
+    # frontleg sensor =-> torso_backleg motor
+    pyrosim.Send_Synapse(sourceNeuronName=2, targetNeuronName=3, weight= 0)
 
     # close robot
     pyrosim.End()
@@ -53,7 +63,7 @@ def Create_World():
     # open world in box.sdf
     pyrosim.Start_SDF("world.sdf")
     #create cube away from robot)
-    pyrosim.Send_Cube(name="Box", pos=[x - 2, y + 2, z], size=[length, width, height])
+    #pyrosim.Send_Cube(name="Box", pos=[x - 2, y + 2, z], size=[length, width, height])
     # close world
     pyrosim.End()
 
