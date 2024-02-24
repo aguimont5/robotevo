@@ -12,10 +12,10 @@ grav_acc = -9.8
 # motors
 max_force = 500
 
-frontleg_amp = np.pi/12
-frontleg_freq = 10
+frontleg_amp = np.pi/8
+frontleg_freq = 20
 frontleg_offset = 0
 
-backleg_amp = np.pi/12
-backleg_freq = 2
+backleg_amp = np.pi/8
+backleg_freq =10
 backleg_offset = 0
