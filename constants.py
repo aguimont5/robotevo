@@ -1,7 +1,7 @@
 import numpy as np
 
 # simulation vars
-steps = 1200
+steps = 400
 sim_speed = 1/60
 
 # gravity
@@ -19,3 +19,6 @@ frontleg_offset = 0
 backleg_amp = np.pi/4
 backleg_freq = 8
 backleg_offset = 0
+
+sensors = ['Torso', 'BackLeg', 'FrontLeg']
+motors = ['Torso_BackLeg', 'Torso_FrontLeg']

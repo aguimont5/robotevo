@@ -1,4 +1,6 @@
+import constants
 import pyrosim.pyrosim as pyrosim
+import random
 
 # set L,W,H
 length = 1.0
@@ -33,6 +35,7 @@ def Generate_Brain():
     # create robot brain file
     pyrosim.Start_NeuralNetwork("brain.nndf")
 
+
     # create sensor neurons
     pyrosim.Send_Sensor_Neuron(name=0, linkName="Torso")
     pyrosim.Send_Sensor_Neuron(name=1, linkName="BackLeg")
@@ -43,17 +46,13 @@ def Generate_Brain():
     pyrosim.Send_Motor_Neuron(name=4, jointName="Torso_FrontLeg")
 
     # create synapses
+    for sensor in range(0,3):
+        for motor in range(3,5):
+            pyrosim.Send_Synapse(sourceNeuronName=sensor, targetNeuronName=motor, weight=random.uniform(-1,1))
 
     # torso sensor -> torso_backleg motor
-    pyrosim.Send_Synapse(sourceNeuronName=1, targetNeuronName=3, weight=0)
-    # backleg sensor -> torso_backleg motor
-    pyrosim.Send_Synapse(sourceNeuronName=1, targetNeuronName=3, weight=-.1)
-    # backleg sensor -> torso_frontleg motor
-    pyrosim.Send_Synapse(sourceNeuronName=1, targetNeuronName=4, weight= 0)
-    # frontleg sensor -> torso_frontleg motor
-    pyrosim.Send_Synapse(sourceNeuronName=2, targetNeuronName=4, weight= -1)
-    # frontleg sensor =-> torso_backleg motor
-    pyrosim.Send_Synapse(sourceNeuronName=2, targetNeuronName=3, weight= 0)
+    #pyrosim.Send_Synapse(sourceNeuronName=1, targetNeuronName=3, weight=0)
+
 
     # close robot
     pyrosim.End()
