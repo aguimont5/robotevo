@@ -1,5 +1,15 @@
 import numpy as np
 
+# set L,W,H
+length = 1.0
+width = 1.0
+height = 1.0
+
+# position variables
+x = 0.0
+y=0.0
+z=.5
+
 # simulation vars
 steps = 400
 sim_speed = 1/60
