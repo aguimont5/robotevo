@@ -6,10 +6,14 @@ import pybullet_data
 import constants as c
 import time as t
 import random
+
 class SIMULATION:
-    def __init__(self):
+    def __init__(self, directOrGui):
         # create physics client
-        physicsClient = p.connect(p.GUI)
+        if(directOrGui=='DIRECT'):
+            physicsClient = p.connect(p.DIRECT)
+        else:
+            physicsClient = p.connect(p.GUI)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         # Adds gravity
         p.setGravity(c.grav_x, c.grav_y, c.grav_acc)
@@ -31,5 +35,7 @@ class SIMULATION:
             self.robot.Sense(i)
             self.robot.Think()
             self.robot.Act(i)
-
             t.sleep(c.sim_speed)
+
+    def Get_Fitness(self):
+        self.robot.Get_Fitness()

@@ -8,12 +8,18 @@ import os
 class SOLUTION:
     def __init__(self):
         self.weights = np.random.rand(3,2) * 2 - 1
+        self.fitness = 0
 
-    def Evalute(self):
+    def Evaluate(self, directOrGui):
         self.Create_World()
         self.Generate_Body()
         self.Generate_Brain()
-        os.system('python simulate.py')
+        os.system("start /B python simulate.py " + directOrGui)
+
+        fitnessFile = open('fitness.txt', 'r')
+        self.fitness = -float(fitnessFile.read())
+        fitnessFile.close()
+
 
     def Generate_Body(self):
 
@@ -67,3 +73,9 @@ class SOLUTION:
         # pyrosim.Send_Cube(name="Box", pos=[x - 2, y + 2, z], size=[constants.length, constants.width, constants.height])
         # close world
         pyrosim.End()
+
+    def Mutate(self):
+        randRow = random.randint(0,2)
+        randCol = random.randint(0,1)
+
+        self.weights[randRow,randCol] = random.random() * 2 - 1

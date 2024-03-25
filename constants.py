@@ -11,8 +11,10 @@ y=0.0
 z=.5
 
 # simulation vars
-steps = 400
+steps = 600
 sim_speed = 1/60
+number_of_generations = 10
+populationSize = 2
 
 # gravity
 grav_x = 0

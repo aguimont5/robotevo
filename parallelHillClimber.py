@@ -4,17 +4,23 @@ import constants
 import random
 import copy
 
-class HILL_CLIMBER:
+class PARALLEL_HILL_CLIMBER:
 
     def __init__(self):
-        self.parent = solution.SOLUTION()
+        self.parents = {}
+        for parent in range(0,constants.populationSize):
+            self.parents[parent] = solution.SOLUTION()
         self.child = solution.SOLUTION()
 
+
     def Evolve(self):
-        self.Show_Best()
-        for currentGeneration in range(0,constants.number_of_generations):
-            self.Evolve_For_One_Generation()
-        self.Show_Best()
+        #self.Show_Best()
+        #for currentGeneration in range(0,constants.number_of_generations):
+        #    self.Evolve_For_One_Generation()
+        #self.Show_Best()
+        for parent in range(0, constants.populationSize):
+            self.parents[parent].Evaluate('GUI')
+        pass
 
     def Evolve_For_One_Generation(self):
         self.Spawn()
